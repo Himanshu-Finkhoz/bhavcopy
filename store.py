@@ -1,4 +1,5 @@
 from app import download_csv
+from test import download_csv_FO
 import datetime
 import os
 import psycopg2
@@ -9,8 +10,10 @@ from dotenv import load_dotenv
 load_dotenv()
 conn_string = os.getenv("DATABASE_URL")
 
-filepath = download_csv()
+
+filepath = download_csv_FO()
 df = pd.read_csv(filepath)
+
 
 
 columns = df.columns.tolist()
@@ -19,7 +22,7 @@ print("Extracted columns:", columns)
 
 date = datetime.datetime.today().strftime("%Y%m%d")
 print(date)
-table_name = f"bhavcopy_bse_eq_{date}"
+table_name = f"bhavcopy_bse_fo_{date}"
 create_stmt = f"CREATE TABLE {table_name} (\n"
 
 for col in columns:
